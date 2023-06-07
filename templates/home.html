@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<body>
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  {% if expiry_date > current_date%}
+    <p> you have subscribed to <b>'{{c_product}}'.</b> your subscription ends on {{expiry_date}}.</p>
+  
+    <p><a href="{% url 'logout' %}">Log Out</a></p><br>
+      
+      {% if ub_count != 0 %}
+        your blogs:
+        {% for blog in user_blogs%}
+          <ul>
+            <li><a href="/blog_content/{{blog.id}}"><b>{{blog.title}}</b></a> -- {{blog.last_modified}}</li>
+            
+          </ul><br>
+        {% endfor %}
+      {%endif%}
+    
+    
+
+    {% if c_product == premium %}
+
+        <a href="/create">click here to write a blog.</a><br><br>
+            <h2>recent Blog post</h2>
+              {% for blog in blogs%}
+              <ul>
+                <li><a href="/blog_content/{{blog.id}}"><b>{{blog.title}}</b></a> by {{blog.user}} -- {{blog.last_modified}}</li>
+                
+              </ul>  
+              {% endfor %}
+    {% else %}
+        <h2>recent Blog post</h2>
+                {% for blog in blogs%}
+                <ul>
+                  <li><a href="/blog_content/{{blog.id}}"><b>{{blog.title}}</b></a> by {{blog.user}} -- {{blog.last_modified}}</li>
+                  
+                </ul>  
+                {% endfor %}
+    {% endif %}
+  {%else %}
+  <p> your subscription was expired on {{expiry_date}}, please purchse the subscription to continue the services.</p>
+  <a href="payments/">click here to purchase</a><br><br>  
+    {%endif%}          
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}<br>
+
+</body>
+</html>

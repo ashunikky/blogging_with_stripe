@@ -1,0 +1,21 @@
+{% if c_paid == True %}
+    
+
+    <h2>{{content.title}}</h2>
+    <p>{{content.content}}</p><br>
+    by {{content.user}}<br>
+    {{content.last_modified}}<br> <br>
+    {% if auth_customer == True%}
+        <a href="{% url 'update' content_id %}"> update</a>
+        <a href="{% url 'delete' content_id %}"> Delete</a><br><br>
+    
+    {% endif%}
+
+
+{% else %}
+    
+    <a href="payments/">you don't have any subscription, to read and write blog,click here to purchase</a><br><br>
+{% endif%}
+
+<a href="{% url 'bloghome' %}"> back to home</a><br><br>
+<a href="{% url 'logout' %}">Log Out</a>
